@@ -1,14 +1,16 @@
+import styles from './Header.module.scss'
+
 function Header() {
     return (
-        <header>
-            <div className="header-logo">
+        <header className={styles.header}>
+            <div className={styles.headerLogo}>
             <img width={40} height={40} src="/img/logo.png" alt="logo" />
-            <div className="header-logo_text">
+            <div>
                 <h3>React Sneakers</h3>
                 <p>Магазин лучших кроссовок</p>
             </div>
             </div>
-            <ul className="header-right">
+            <ul className={styles.headerRight}>
             <li>
                 <img width={18} height={18} src="/img/cart.svg" alt="cart" />
                 <span>1205 руб.</span>
