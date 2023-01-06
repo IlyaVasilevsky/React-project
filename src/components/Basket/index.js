@@ -1,6 +1,38 @@
 import styles from './Basket.module.scss'
+import Info from '../Info'
+import React from 'react'
+import AppContext from '../../context';
+import axios from 'axios'
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function Basket({onClose, onRemove, items = []}) {
+
+  const { cartItems, setCartItems } = React.useContext(AppContext)
+  const [isOrderComplete, setIsOrderComplete] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [orderId, setOrderId] = React.useState(null)
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios.post('https://63af1796649c73f572b525fe.mockapi.io/orders', {
+        items: cartItems,
+      })
+      setOrderId(data.id)
+      setIsOrderComplete(true)
+      setCartItems([])
+
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i]
+        await axios.delete('https://63af1796649c73f572b525fe.mockapi.io/cart/' + item.id)
+        await delay(1000)
+      }
+    } catch (error) {
+      alert('Не удалось создать заказ.')
+    }
+    setIsLoading(false)
+  }
 
   return (
     <div className={styles.cover}>
@@ -8,11 +40,11 @@ function Basket({onClose, onRemove, items = []}) {
         <h2>Корзина <img className={styles.close} onClick={onClose} src="/img/cross.svg" alt="close" /> </h2>
         {
           items.length > 0 ?
-          <div>
+          <>
             <div className={styles.items}>
               {
                 items.map((obj) => (
-                  <div className={styles.cartItem}>
+                  <div key={obj.id} className={styles.cartItem}>
                     <img className={styles.cartImg} width={70} height={70} src={obj.imgURL} alt="sneakers" />
                     <div>
                       <p>{obj.title}</p>
@@ -35,14 +67,8 @@ function Basket({onClose, onRemove, items = []}) {
                 <b>1074 руб.</b>
               </li>
             </ul>
-            <button className={styles.cartBtn}>Оформить заказ</button>
-          </div> :
-          <div className={styles.cartEmpty}>
-            <img width={120} height={120} src="/img/empty-cart.jpg" alt="empty" />
-            <h2>Корзина пустая</h2>
-            <p>Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-            <button className={styles.cartBtn} onClick={onClose}>Вернуться назад</button>
-          </div>
+            <button disabled={isLoading} onClick={onClickOrder} className={styles.cartBtn}>Оформить заказ</button>
+          </> : <Info title={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"} description={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."} image={isOrderComplete ? "/img/order.jpg" : "/img/empty-cart.jpg"} />
         }
       </div>
     </div>
