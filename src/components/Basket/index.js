@@ -1,17 +1,18 @@
 import styles from './Basket.module.scss'
 import Info from '../Info'
 import React from 'react'
-import AppContext from '../../context';
 import axios from 'axios'
+import { useCart } from '../../hooks/useCart'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function Basket({onClose, onRemove, items = []}) {
 
-  const { cartItems, setCartItems } = React.useContext(AppContext)
+  const {cartItems, setCartItems, totalPrice} = useCart()
   const [isOrderComplete, setIsOrderComplete] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [orderId, setOrderId] = React.useState(null)
+
 
   const onClickOrder = async () => {
     try {
@@ -59,12 +60,12 @@ function Basket({onClose, onRemove, items = []}) {
               <li>
                 <span>Итого:</span>
                 <div></div>
-                <b>21 498 руб.</b>
+                <b>{totalPrice} руб.</b>
               </li>
               <li>
                 <span>Налог 5%:</span>
                 <div></div>
-                <b>1074 руб.</b>
+                <b>{Math.round(totalPrice / 100 * 5)} руб.</b>
               </li>
             </ul>
             <button disabled={isLoading} onClick={onClickOrder} className={styles.cartBtn}>Оформить заказ</button>
