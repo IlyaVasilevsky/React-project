@@ -87,9 +87,9 @@ function App() {
         {cartOpened && <Basket items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />}
         <Header onClickCart={() => setCartOpened(true)} />
         <Routes>
-          <Route path="/" element={<Home cartItems={cartItems} searchValue={searchValue} onChangeSearchValue={onChangeSearchValue} items={items} onFavorite={onFavorite} onAddToCart={onAddToCart} isLoading={isLoading}/>} />
-          <Route path="/favorite" element={<Favorite /> } />
-          <Route path="/orders" element={<Orders /> } />
+          <Route path="" element={<Home cartItems={cartItems} searchValue={searchValue} onChangeSearchValue={onChangeSearchValue} items={items} onFavorite={onFavorite} onAddToCart={onAddToCart} isLoading={isLoading}/>} />
+          <Route path="favorite" element={<Favorite /> } />
+          <Route path="orders" element={<Orders /> } />
         </Routes>
       </div>
     </AppContext.Provider>

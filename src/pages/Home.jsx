@@ -16,7 +16,7 @@ function Home({searchValue, onChangeSearchValue, items, onFavorite, onAddToCart,
             <div className='title-block'>
                 <h1>{searchValue ? `Поиск по запросу "${searchValue}"` : 'Все кросовки'}</h1>
                 <div className='search'>
-                    <img src="/img/search.svg" alt="Search" />
+                    <img src="img/search.svg" alt="Search" />
                     <input onChange={onChangeSearchValue} value={searchValue} placeholder="Поиск..." />
                 </div>
             </div>

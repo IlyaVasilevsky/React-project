@@ -38,7 +38,7 @@ function Basket({onClose, onRemove, items = []}) {
   return (
     <div className={styles.cover}>
       <div className={styles.basket}>
-        <h2>Корзина <img className={styles.close} onClick={onClose} src="/img/cross.svg" alt="close" /> </h2>
+        <h2>Корзина <img className={styles.close} onClick={onClose} src="img/cross.svg" alt="close" /> </h2>
         {
           items.length > 0 ?
           <>
@@ -51,7 +51,7 @@ function Basket({onClose, onRemove, items = []}) {
                       <p>{obj.title}</p>
                       <b>{obj.price} руб.</b>
                     </div>
-                    <img className={styles.close} onClick={() => onRemove(obj.id)} src="/img/cross.svg" alt="remove" />
+                    <img className={styles.close} onClick={() => onRemove(obj.id)} src="img/cross.svg" alt="remove" />
                   </div>
                 ))
               }
@@ -69,7 +69,7 @@ function Basket({onClose, onRemove, items = []}) {
               </li>
             </ul>
             <button disabled={isLoading} onClick={onClickOrder} className={styles.cartBtn}>Оформить заказ</button>
-          </> : <Info title={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"} description={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."} image={isOrderComplete ? "/img/order.jpg" : "/img/empty-cart.jpg"} />
+          </> : <Info title={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"} description={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."} image={isOrderComplete ? "img/order.jpg" : "img/empty-cart.jpg"} />
         }
       </div>
     </div>
